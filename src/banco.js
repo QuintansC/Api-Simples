@@ -1,13 +1,9 @@
 const banco = {
     "schema": [
         {
-            "logins": "Gustavo",
+            "logins": "admin",
             "senha": "123456"
         },
-        {
-            "logins": "Gustavinho",
-            "senha": "123456"
-        }
     ]
     
 }
