@@ -1,7 +1,7 @@
 const banco = {
     "schema": [
         {
-            "logins": "admin",
+            "user": "admin",
             "senha": "123456"
         },
     ]

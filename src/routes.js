@@ -13,21 +13,6 @@ server.get('/', (req, res) =>{
         res.status(404).send("<h3 align='center'>Page not Exists</h3>");
     }
 })
-
-server.get('/calcula', (req, res) =>{
-    try{
-        bd.schema.push({logins: `gustavo${i++}`, senha: '123456'},);
-        res.status(200).send(bd.schema.map((data)=>{
-            return(
-                `<p>Login: ${data.logins}</p>`+
-                `<p>Senha: ${data.senha}</p>`
-            )
-        }).toString());
-    }catch(error){
-        res.status(201).send("<h3 align='center'>Page not Exists</h3>");
-    }
-})
-
 server.post('/calcula', (req, res) => { 
     const origin = req.body.origem;
     const destiny = req.body.destino;
@@ -42,24 +27,39 @@ server.post('/calcula', (req, res) => {
     });
 });
 
-server.post('/login', async (req, res) => {
-    const user = req.body.login;
-    const pass = req.body.password;
+server.post('/api/cadastrar', (req, res) =>{
+    try{
+        bd.schema.push({logins: req.body.user, senha: req.body.senha},);
+        res.status(200).send(bd.schema.map((data)=>{
+            return(
+                `<p>Login: ${data.logins}</p>`+
+                `<p>Senha: ${data.senha}</p>`
+            )
+        }).toString());
+    }catch(error){
+        res.status(201).send("<h3 align='center'>Page not Exists</h3>");
+    }
+})
 
+server.post('/api/login', async (req, res) => {
     var mapeamento = bd.schema.map((data)=>{
-        if(data.logins === user && data.senha === pass){
+        if(data.user === req.body.user && data.senha === req.body.password){
             var user = data;
+            return user;
         }
-        return user;
+        else{
+            return false;
+        }
+        
     })
 
     if (mapeamento[0] !== false){
-        res.status(200).send({
+        res.status(202).send({
             message: "is Loged",
-            jwt: autenticate(user, pass),
+            jwt: autenticate(req.body.user, req.body.password),
         })
     }else{
-        res.status(400).send({
+        res.status(406).send({
             message: "not Loged",
         })
     }
