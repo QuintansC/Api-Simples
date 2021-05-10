@@ -1,10 +1,8 @@
-const express =  require('express');
+const express = require('express');
 class FaleMais {
     constructor(){
         this.express = express();
-
         this.middleware();
-        this.calcula();
     }
     
     middleware(){
@@ -12,7 +10,7 @@ class FaleMais {
         this.express.use(require('cors')());
     }
 
-    calcula(origem, destino, minutos,plano){
+    calcula(origem, destino, minutos, plano){
         const definirCaminho = require('./functions.js').definirCaminho;
         return definirCaminho(origem, destino, minutos ,plano);
     }

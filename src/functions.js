@@ -1,5 +1,6 @@
 //Usa a biblioteca de criptografia padrão do node
 const crypto = require('crypto');
+
 //arredonda pra o tanto de casas decimais desejadas
 const round = (num, places) => {
 	if (!("" + num).includes("e")) {
@@ -11,7 +12,7 @@ const round = (num, places) => {
 			sig = "+";
 		}
 
-		return +(Math.round(+arr[0] + "e" + sig + (+arr[1] + places)) + "e-" + places);
+		return +(Math.round(+arr[0] + "e" + sig + (+arr[1] + places) + "e-" + places));
 	}
 }
 //valores de acordo com o plano
@@ -26,7 +27,7 @@ function calcularMinutesIncrement(number, minutes, plano) {
         adicional: round(adicional, 2)
     };
 }
-function definirCaminho(origem, destino, minutos,plano){
+function definirCaminho(origem, destino, minutos, plano){
     if(origem === '011'){
         return testDestinos(destino, minutos,plano);
     }
@@ -35,7 +36,7 @@ function definirCaminho(origem, destino, minutos,plano){
         return testOrigens(origem, minutos,plano);
     }   
 }
-function testDestinos(destino, minutes,plano) {
+function testDestinos(destino, minutes, plano) {
     switch (destino) {
         case '016':
             return calcularMinutesIncrement(1.9, minutes,plano);
@@ -50,7 +51,7 @@ function testDestinos(destino, minutes,plano) {
             
     }   
 }
-function testOrigens(origem, minutes,plano) {
+function testOrigens(origem, minutes, plano) {
     switch (origem) {
         case '016':
             return calcularMinutesIncrement(2.9, minutes, plano);
