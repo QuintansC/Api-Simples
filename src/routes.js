@@ -1,10 +1,10 @@
 const {calcula} = require('./app');
-
 const server = require('express').Router();
-const bd = require('./banco');
 const { autenticate } = require('./functions');
 
-var i = 0;
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://kanbanUser:BVNYxza48DnKp6W@cluster0.yk91m.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 server.get('/', (req, res) =>{
     try{
@@ -13,7 +13,8 @@ server.get('/', (req, res) =>{
         res.status(404).send("<h3 align='center'>Page not Exists</h3>");
     }
 })
-server.post('/calcula', (req, res) => { 
+
+server.post('/calcula', (req, res, next) => { 
     const origin = req.body.origem;
     const destiny = req.body.destino;
     const minutes = req.body.minutos;
@@ -27,41 +28,65 @@ server.post('/calcula', (req, res) => {
     });
 });
 
-server.post('/api/cadastrar', (req, res) =>{
-    try{
-        bd.schema.push({logins: req.body.user, senha: req.body.senha},);
-        res.status(200).send(bd.schema.map((data)=>{
-            return(
-                `<p>Login: ${data.logins}</p>`+
-                `<p>Senha: ${data.senha}</p>`
-            )
-        }).toString());
-    }catch(error){
-        res.status(201).send("<h3 align='center'>Page not Exists</h3>");
-    }
+server.post('/api/cadastrar', (req, res, next) =>{
+    client.connect(async err => {
+        try{
+            const collection = client.db("kanban").collection("login");
+            const query = await collection.find({user: req.body.user}).toArray();
+            const queryEmail = await collection.find({email: req.body.email}).toArray();
+            if(query[0] === undefined && queryEmail[0] === undefined){
+                if(req.body.user !== '' && req.body.password !== '' && req.body.email !== ''){
+                    collection.insertOne({
+                        email: req.body.email,
+                        user: req.body.user,
+                        password: req.body.password
+                    })
+                    res.status(201).json({
+                        message: 'Cadastrado com sucesso!',
+                    });
+                }else{
+                    res.status(406).json({
+                        message: 'Campos vazios nao sao permitidos',
+                    });
+                }
+            }
+            else{
+                res.status(401).json({
+                    message: "Usuario ja existente",
+                })
+            }
+        }catch (error){
+            console.error('erro');
+        }
+    });
 })
 
-server.post('/api/login', async (req, res) => {
-    var mapeamento = bd.schema.map((data)=>{
-        if(data.user === req.body.user && data.senha === req.body.password){
-            var user = data;
-            return user;
-        }
-        else{
-            return false;
-        }
-        
-    })
-
-    if (mapeamento[0] !== false){
-        res.status(202).send({
-            message: "is Loged",
-            jwt: autenticate(req.body.user, req.body.password),
-        })
-    }else{
-        res.status(406).send({
-            message: "not Loged",
-        })
+server.post('/api/login', (req, res, next) => {
+    try {
+        client.connect(async err => {
+            const collection = client.db("kanban").collection("login");
+            const query = await collection.find({user: req.body.user}).toArray();
+            if(query[0] !== undefined){
+                if(req.body.user === query[0].user && req.body.password === query[0].password){
+                    const signatureUrl = autenticate(req.body.user, req.body.password);
+                    res.status(202).json({
+                        token: signatureUrl,
+                    });
+                }else{
+                    res.status(406).json({
+                        message: false,
+                    });
+                }
+            }else{
+                res.status(401).json({
+                    message: 'Usuario não existe',
+                });
+            }
+        });
+    } catch (error) {
+        console.error('erro')
     }
+
+         
 });
 module.exports = server;

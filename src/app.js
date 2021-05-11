@@ -1,4 +1,6 @@
 const express = require('express');
+const routes = require('./routes.js');
+
 class FaleMais {
     constructor(){
         this.express = express();
@@ -8,6 +10,7 @@ class FaleMais {
     middleware(){
         this.express.use(express.json());
         this.express.use(require('cors')());
+        this.express.use(routes);
     }
 
     calcula(origem, destino, minutos, plano){
@@ -18,5 +21,5 @@ class FaleMais {
 
 module.exports = {
     server: new FaleMais().express,
-    calcula: new FaleMais().calcula,
+    calcula: new FaleMais().calcula
 }
