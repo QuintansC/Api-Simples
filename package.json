@@ -2,8 +2,7 @@
   "name": "node-react",
   "version": "1.0.0",
   "scripts": {
-    "other": "cd client && yarn start",
-    "start": "concurrently --kill-others-on-fail \"node server.js\" \" yarn other\"",
+    "start": "concurrently --kill-others-on-fail \"node server.js\"",
     "test": "jest"
   },
   "dependencies": {
