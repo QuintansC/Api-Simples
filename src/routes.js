@@ -28,14 +28,15 @@ server.post('/calcula', (req, res, next) => {
     });
 });
 
-server.post('/api/cadastrar', (req, res, next) =>{
+server.post('/cadastrar', (req, res, next) =>{
     client.connect(async err => {
         try{
             const collection = client.db("kanban").collection("login");
             const query = await collection.find({user: req.body.user}).toArray();
             const queryEmail = await collection.find({email: req.body.email}).toArray();
             if(query[0] === undefined && queryEmail[0] === undefined){
-                if(req.body.user !== '' && req.body.password !== '' && req.body.email !== ''){
+                console.log(req.body)
+                if(req.body.user !== '' && req.body.password !== '' && req.body.email !== '' ){
                     collection.insertOne({
                         email: req.body.email,
                         user: req.body.user,
@@ -56,12 +57,12 @@ server.post('/api/cadastrar', (req, res, next) =>{
                 })
             }
         }catch (error){
-            console.error('erro');
+            //console.error('erro');
         }
     });
 })
 
-server.post('/api/login', (req, res, next) => {
+server.post('/login', (req, res, next) => {
     try {
         client.connect(async err => {
             const collection = client.db("kanban").collection("login");
