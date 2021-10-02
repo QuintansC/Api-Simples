@@ -7,10 +7,17 @@ const uri = "mongodb+srv://kanbanUser:BVNYxza48DnKp6W@cluster0.yk91m.mongodb.net
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 server.get('/', (req, res) =>{
+    const template = `
+    <div>
+        <h3 style="margin-top: 20%;" align='center'>Bem vindo a API do Clone do Trello</h3>
+        <p align='center'> Segue o link do Repositorio da Aplicação: https://github.com/QuintansC/drag-and-drop </p>
+        <p align='center'> Segue o link do Repositorio da API: https://github.com/QuintansC/Api-Simples </p>
+    </div>
+    `
     try{
-        res.status(404).send("<h3 align='center'>Page not Exists</h3>");
+        res.status(404).send(template);
     }catch(error){
-        res.status(404).send("<h3 align='center'>Page not Exists</h3>");
+        res.status(404).send(template);
     }
 })
 
@@ -75,7 +82,7 @@ server.post('/login', (req, res, next) => {
                     });
                 }else{
                     res.status(406).json({
-                        message: false,
+                        message: 'Senha incorreta',
                     });
                 }
             }else{
@@ -85,7 +92,7 @@ server.post('/login', (req, res, next) => {
             }
         });
     } catch (error) {
-        console.error('erro')
+        console.error(error)
     }
 
          
