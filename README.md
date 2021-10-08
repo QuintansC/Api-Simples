@@ -21,16 +21,8 @@ $ yarn
 # Para rodar o servidor e aplicação juntos basta
 $ yarn start
 
-# Caso queira fazer manualmente:
+# Ou
 $ node server.js
-
-# Volte a pasta client no terminal
-$ cd client
-
-## Após:
-
-$ yarn start
-
 
 # O servidor inciará na porta:5000 - acesse <http://localhost:5000> e a aplicação front-end porta:3000 -  acesse <http://localhost:3000>
 ```
@@ -45,9 +37,9 @@ $ yarn start
   $ yarn 
 
   # Caso contrario execute diretamente os testes
-  $ jest 
+  $ yarn jest 
   ## Ou
-  $ test
+  $ yarn test
 ```
 ## Detalhes da aplicação  
 
