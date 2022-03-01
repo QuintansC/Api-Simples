@@ -93,8 +93,35 @@ server.post('/login', (req, res, next) => {
         });
     } catch (error) {
         console.error(error)
-    }
+    } 
+});
 
-         
+server.post('/createWorkspace', (req, res, next) => {
+    try {
+        client.connect(async err => {
+            const collection = client.db("kanban").collection("workspaces");
+            const query = await collection.find({userID: req.body.userID}).toArray();
+            const queryEmail = await collection.find({nameProject: req.body.nameProject}).toArray();
+            if(query[0] === undefined && queryEmail[0] === undefined){
+                if(req.body.userID !== '' && req.body.nameProject !== '' && req.body.description !== '' ){
+                    collection.insertOne({
+                        userID: req.body.userID,
+                        nameProject: req.body.nameProject,
+                        description: req.body.description,
+                    })
+                    res.status(201).json({
+                        message: 'Projeto cadastrado com sucesso!',
+                    });
+                }else{
+                    res.status(406).json({
+                        message: 'Campos vazios nao sao permitidos',
+                    });
+                }
+            }
+        });
+    } catch (error) {
+        console.error(error)
+    }
+     
 });
 module.exports = server;
