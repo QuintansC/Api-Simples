@@ -109,12 +109,13 @@ server.post('/createWorkspace', (req, res, next) => {
                         nameProject: req.body.nameProject,
                         description: req.body.description,
                     })
+                    console.log('testes')
                     res.status(201).json({
                         message: 'Projeto cadastrado com sucesso!',
                     });
                 }else{
                     res.status(406).json({
-                        message: 'Campos vazios nao sao permitidos',
+                        message: 'Houve algum erro',
                     });
                 }
             }
