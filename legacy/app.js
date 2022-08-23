@@ -1,5 +1,5 @@
 const express = require('express');
-const routes = require('./routes.js');
+const routes = require('./routes.ts')
 
 class FaleMais {
     constructor(){
