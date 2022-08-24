@@ -37,40 +37,6 @@ server.post('/calcula', (req: Request, res: Response) => {
 });
 
 
-server.post('/createWorkspace', (req: Request, res: Response) => {
-    try {
-        client.connect(async () => {
-            const collection = client.db("kanban").collection("workspaces");
-            const query = await collection.find({userID: req.body.userID}).toArray();
-            const queryEmail = await collection.find({nameProject: req.body.nameProject}).toArray();
-            if(query[0] === undefined && queryEmail[0] === undefined){
-                if(req.body.userID !== '' && req.body.nameProject !== '' && req.body.description !== '' ){
-                    collection.insertOne({
-                        userID: req.body.userID,
-                        nameProject: req.body.nameProject,
-                        description: req.body.description,
-                    })
-                    res.status(201).json({
-                        message: 'Projeto cadastrado com sucesso!',
-                    });
-                }else{
-                    res.status(406).json({
-                        message: 'Houve algum erro',
-                    });
-                }
-            }else{
-                res.status(404).json({
-                    message: "Não foi possivel criar"
-                })
-            }
-        });
-    } catch (error) {
-        console.error(error)
-    }
-     
-});
-
-
 server.get('/getUsers', (req: Request, res: Response) => {
     try {
         client.connect(async () => {
