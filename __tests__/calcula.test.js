@@ -1,4 +1,4 @@
-const calcula = require('../src/app.js').calcula;
+const calcula = require('../legacy/app.js').calcula;
 
 const request = require('supertest');
 const app = require('express');
