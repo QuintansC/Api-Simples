@@ -35,31 +35,4 @@ server.post('/calcula', (req: Request, res: Response) => {
         valorInicial: teste.valorInicial
     });
 });
-
-
-server.get('/getUsers', (req: Request, res: Response) => {
-    try {
-        client.connect(async () => {
-            const collection = client.db("kanban").collection("login");
-            const query = await collection.findById(req.query.id).toArray();
-            console.log(req.query.id)
-            if(query[0] === undefined){
-                res.status(200).json({
-                    message: "Sucesso na busca",
-                    data: query
-                })
-            }else{
-                res.status(404).json({
-                    message: "Busca sem sucesso"
-                })
-            }
-
-        });
-    } catch (error) {
-        console.error(error)
-    }
-     
-});
-
-
 module.exports = server;

@@ -1,6 +1,3 @@
-//Usa a biblioteca de criptografia padrão do node
-const crypto = require('crypto');
-
 //arredonda pra o tanto de casas decimais desejadas
 const round = (num, places) => {
 	if (!("" + num).includes("e")) {
