@@ -1,11 +1,11 @@
 import express from "express";
 import cors from 'cors';
-import { users } from "./Routes/users.router";
-import { home } from "./Routes/home.router";
-import { signup } from "./Routes/signup.router";
-import { signin } from "./Routes/signin.router";
-import { create as createWorkspace } from "./Routes/createworkspace.router";
-import { categoriesRouter } from "./Routes/categories.router";
+import { users } from "./routes/users.router";
+import { home } from "./routes/home.router";
+import { signup } from "./routes/signup.router";
+import { signin } from "./routes/signin.router";
+import { create as createWorkspace } from "./routes/createworkspace.router";
+import { categoriesRouter } from "./routes/categories.router";
 
 const app = express()
 const port = 5000
