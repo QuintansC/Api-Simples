@@ -4,7 +4,8 @@
   "scripts": {
     "start": "concurrently --kill-others-on-fail \"ts-node server.ts\"",
     "dev": "concurrently --kill-others-on-fail \"nodemon ./src/index.ts\"",
-    "test": "jest"
+    "test": "jest",
+    "build": "yarn tsc"
   },
   "dependencies": {
     "body-parser": "^1.19.0",

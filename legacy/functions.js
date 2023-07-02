@@ -68,6 +68,5 @@ function testOrigens(origem, minutes, plano) {
 module.exports = {
     definirCaminho: definirCaminho,
     calcularMinutesIncrement: calcularMinutesIncrement,
-    autenticate: autenticate,
 }
 ;
