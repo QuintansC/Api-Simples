@@ -1,14 +1,14 @@
 
-import express from "express";
+import express, { Request, Response } from "express";
 
 export const home = express.Router();
 
 home.use(express.json());
-home.get('/',  () =>{
+home.get('/',  (req: Request, res: Response) =>{
     try{
-        console.log('hi')
+        res.status(200).send({message: "Success"})
     }
     catch (error) {
-        console.error(error)
+        res.status(400).send({ message: req })
     }
 })
