@@ -1,15 +1,15 @@
 {
     "name": "Api-Simples",
     "version": 2,
-    "public": false,
+    "public": true,
     "build": {
-        "src": "api/index.js",
+        "src": "src/index.ts",
         "use": "@vercel/node"
     },
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "api/index.js"
+            "dest": "src/index.ts"
         }
     ]
 }
