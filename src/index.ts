@@ -1,6 +1,6 @@
 import { createServer } from "./utils/createServer";
 
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 3000;
 const app = createServer()
 
 app.listen(port, () => {
